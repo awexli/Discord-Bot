@@ -10,15 +10,17 @@ client.commands = new Discord.Collection();
 
 const cooldowns = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
 const PREFIX = "p-";
 
+// set every js file in the commands folder into a string array
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+// set the name: object in each command module to be the official commands
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
+
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`)
@@ -34,13 +36,18 @@ client.once('ready', () => {
 client.on('message', message => {
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
+    // p-vid haiku
+    // ['vid', 'haiku']
     const args = message.content.slice(PREFIX.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     if (!client.commands.has(commandName)) return;
 
+    // command officially stored
     const command = client.commands.get(commandName);
 
+    // checks for any command module using args: object
+    console.log(command.args + args.length)
     if (command.args && !args.length) {
         let reply = `You didn't provide any arguments, ${message.author}!`;
 
@@ -54,7 +61,7 @@ client.on('message', message => {
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
     }
-    
+
     const now = Date.now();
     const timestamps = cooldowns.get(command.name);
 

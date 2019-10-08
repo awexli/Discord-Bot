@@ -1,11 +1,16 @@
 const Discord = require('discord.js');
 
-module.exports = message => {
-    const embed = new Discord.RichEmbed()
-        .setTitle('Commands')
-        .setColor(0xFF0000)
-        .addField('!vid', 'Links to a random video')
-        .addField('!clear <number>', 'Clears the specified number of chat messages')
-        .addField('!avatar', 'Links the users avatar');
-    message.channel.send(embed);
-}
+module.exports = {
+    name: 'help',
+    description: 'Lists commands a user can execute',
+    execute(message) {
+        const embed = new Discord.RichEmbed()
+            .setTitle('Commands')
+            .setColor(0xFF0000)
+            .addField('p-vid', 'Shows a lists of commands for linking videos.')
+            .addField('p-prune <number>', 'Clears the specified number of chat messages')
+            .addField('p-avatar <@username>', 'Get the avatar URL of the tagged user(s), or your own avatar.');
+        message.channel.send(embed);
+
+    }
+};

@@ -1,76 +1,73 @@
-<<<<<<< HEAD
 require('dotenv').config()
+
 
 const fs = require('fs')
 const Discord = require('discord.js')
-const client = new Discord.Client()
 
-// read all files of the events folder
-fs.readdir('./events/', (err, files) => { // arg files = array of filenames in directory
-    files.forEach(file => {
-        const eventHandler = require(`./events/${file}`) // require each event handler using the FILENAME
-        const eventName = file.split('.')[0] // remove .js extension from the FILENAME
-        client.on(eventName, (...args) => eventHandler(client, ...args))
-    })
-})
+const client = new Discord.Client();
+
+client.commands = new Discord.Collection();
+
+const cooldowns = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+const PREFIX = "p-";
+
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
+
+client.once('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`)
+    client.user.setPresence({
+        status: "online",
+        game: {
+            name: "myself being developed",
+            type: "WATCHING"
+        }
+    });
+});
+
+client.on('message', message => {
+    if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+
+    const args = message.content.slice(PREFIX.length).split(/ +/);
+    const commandName = args.shift().toLowerCase();
+
+    if (!client.commands.has(commandName)) return;
+
+    const command = client.commands.get(commandName);
+
+    if (command.args && !args.length) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
+
+        if (command.usage) {
+            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+        }
+
+        return message.channel.send(reply);
+    }
+
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new Discord.Collection());
+    }
+    
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+
+    // gets the necessary cooldown amount in the command file with default of 3 seconds
+    const cooldownAmount = (command.cooldown || 3) * 1000;
+
+    try {
+        command.execute(message, args);
+    } catch (error) {
+        console.error(error);
+        message.reply('there was an error trying to execute that command!');
+    }
+});
+
 
 client.login(process.env.BOT_TOKEN)
-=======
-const {Client, RichEmbed} = require('discord.js');
-const client = new Client();
-
-const token = ' ';
-
-const PREFIX = '!';
-
-client.on('ready', () => {
-    console.log('Bot is online!');
-})
-
-client.on('message', msg=> {
-    
-    let args = msg.content.substring(PREFIX.length).split(" ");
-
-    switch (args[0]){
-        case 'avatar':
-
-            msg.reply(msg.author.avatarURL);
-
-            break;
-
-        case 'vid':
-            
-            var fs = require("fs");
-            var text = fs.readFileSync("./youtube.txt", "utf-8");
-            var textByLine = text.split("\n")
-
-            var index = Math.floor(Math.random() * textByLine.length);
-            var html = 'https://youtu.be/' + textByLine[index];
-            msg.channel.send(html);
-
-            break;
-
-        case 'help':
-
-            const embed = new RichEmbed()
-            .setTitle('Commands')
-            .setColor(0xFF0000)
-            .addField('!vid', 'Links to a random video')
-            .addField('!clear <number>', 'Clears the specified number of chat messages')
-            .addField('!avatar', 'Links the users avatar');
-
-            msg.channel.send(embed);
-
-            break;
-
-        case 'clear':
-
-            if (!args[1]) return msg.reply('Define how many messages you want to clear.')
-            msg.channel.bulkDelete(args[1]);
-
-            break;
-    }
-})
-
-client.login(token)
->>>>>>> 0a5ce033f5f53b2d6c57ef11b7de69b3447a3349

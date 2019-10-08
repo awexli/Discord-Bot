@@ -1,9 +1,40 @@
-module.exports = message => {
-    var fs = require("fs");
-    var text = fs.readFileSync("./youtube.txt", "utf-8");
-    var textByLine = text.split("\n")
+const Discord = require('discord.js');
+const fs = require("fs");
 
-    var index = Math.floor(Math.random() * textByLine.length);
-    var html = 'https://youtu.be/' + textByLine[index];
-    message.channel.send(html);
-}
+var haikuText = fs.readFileSync("./youtube.txt", "utf-8");
+var songText = fs.readFileSync("./song.txt", "utf-8");
+
+module.exports = {
+    name: 'vid',
+    description: 'Returns a random youtube video.',
+
+    execute(message, args) {
+        const embed = new Discord.RichEmbed()
+            .setTitle('p-vid <command>')
+            .setColor(0xFF0000)
+            .addField('p-vid haiku', 'Links to a random video I like')
+            .addField('p-vid song', 'Links to a random song I like');
+
+        const type = args[0];
+
+        // first argument
+        if (!args.length) {
+            return message.reply(embed);
+        }
+
+        if (type == 'haiku') {
+            // splits each line in the text file
+            // stores each line in textByLine string array
+            var textByLine = haikuText.split("\n");
+        } else if (type == 'song') {
+            console.log("Songs:");
+            var textByLine = songText.split("\n");
+            console.log(textByLine);
+        }
+        
+        var index = Math.floor(Math.random() * textByLine.length);
+        console.log('index: ' + index);
+        var html = 'https://youtu.be/' + textByLine[index];
+        message.channel.send(html);
+    }
+};

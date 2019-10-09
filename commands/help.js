@@ -12,5 +12,5 @@ module.exports = {
             .addField('p-avatar <@username>', 'Get the avatar URL of the tagged user(s), or your own avatar.');
         message.channel.send(embed);
 
-    }
+    },
 };

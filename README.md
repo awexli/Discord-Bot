@@ -1,5 +1,5 @@
 # Discord-Bot  
-##Planning to add  
+## Planning to add  
 - Osu profile / stats  
 - Role management  
 - Memes

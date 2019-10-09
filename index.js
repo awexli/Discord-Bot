@@ -47,7 +47,6 @@ client.on('message', message => {
     const command = client.commands.get(commandName);
 
     // checks for any command module using args: object
-    console.log(command.args + args.length)
     if (command.args && !args.length) {
         let reply = `You didn't provide any arguments, ${message.author}!`;
 
@@ -64,9 +63,24 @@ client.on('message', message => {
 
     const now = Date.now();
     const timestamps = cooldowns.get(command.name);
-
-    // gets the necessary cooldown amount in the command file with default of 3 seconds
     const cooldownAmount = (command.cooldown || 3) * 1000;
+
+    // runs once a user has executed a command AGAIN
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.reply(
+                `please wait ${timeLeft.toFixed(1)} more second(s) before using the \`${command.name}\` command.`
+            )
+        }
+    }
+
+    // user executed a command
+    timestamps.set(message.author.id, now);
+    // user has not executed a command AGAIN during the cooldown period
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
         command.execute(message, args);

@@ -15,12 +15,11 @@ module.exports = {
             .addField('p-vid haiku', 'Links to a random video I like')
             .addField('p-vid song', 'Links to a random song I like');
 
-        const type = args[0];
-
-        // first argument
         if (!args.length) {
             return message.reply(embed);
         }
+
+        const type = args[0];
 
         if (type == 'haiku') {
             // splits each line in the text file
@@ -36,5 +35,5 @@ module.exports = {
         console.log('index: ' + index);
         var html = 'https://youtu.be/' + textByLine[index];
         message.channel.send(html);
-    }
+    },
 };

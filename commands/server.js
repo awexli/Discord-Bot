@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name: 'server',
-    descriptions: 'Gets information about the server',
+    description: 'Gets information about the server',
     execute(message) {
 
         const embed = new Discord.RichEmbed()

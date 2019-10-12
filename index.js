@@ -38,7 +38,7 @@ client.on('guildMemberAdd', member => {
     console.log(`User ${member.user.tag} has joined the server!`);
 
     var role = member.guild.roles.find(role => role.name == "User");
-    
+
     member.addRole(role);
 });
 
@@ -92,7 +92,7 @@ client.on('message', message => {
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
-        command.execute(message, args, client);
+        command.execute(message, args);
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');

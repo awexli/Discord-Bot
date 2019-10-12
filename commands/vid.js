@@ -15,7 +15,7 @@ module.exports = {
             .addField('p-vid haiku', 'Links to a random video I like')
             .addField('p-vid song', 'Links to a random song I like');
 
-        if (!args.length) {
+        if (!args.length || args.length > 1) {
             return message.reply(embed);
         }
 
@@ -29,6 +29,8 @@ module.exports = {
             console.log("Songs:");
             var textByLine = songText.split("\n");
             console.log(textByLine);
+        } else {
+            return message.reply(embed);
         }
         
         var index = Math.floor(Math.random() * textByLine.length);

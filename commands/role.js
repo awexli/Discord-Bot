@@ -3,20 +3,26 @@ module.exports = {
     description: "Assigns a guild member to role",
     execute(message, args) {
 
-        // check for args.length>2 later
-        if (!args.length) {
-            return message.reply(`You didn't provide any arguments, ${message.author}!`);
+        // check for permission later
+        if (!args.length || args.length > 2) {
+            return message.reply(`\`p-role\` \`<@username>\` \`<role>\``);
         }
 
-       let gMember = message.mentions.members.first();
-       console.log(gMember);
-
+        let gMember = message.mentions.members.first();
         if (!gMember) {
-            return message.reply("Couldn't find that user");
+            return message.reply("Couldn't find that user.");
         }
-       
-        var memberRole = message.guild.roles.find(role => role.id == "632673225062613051");
-        gMember.addRole(memberRole.id).then(console.log).catch(console.error);
+
+        let roleName = args[1];
+        var memberRole = message.guild.roles.find(role => role.name == roleName);
+        if (!memberRole) {
+            return message.reply("Couldnt find that role.");
+        }
+
+        gMember.addRole(memberRole.id);
+
+        message.reply(`\`${gMember.displayName}\` has been added to the role, \`${roleName}\``);
+
 
     },
 };

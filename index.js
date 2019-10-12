@@ -31,6 +31,14 @@ client.once('ready', () => {
             type: "WATCHING"
         }
     });
+
+});
+
+client.on('guildMemberAdd', member => {
+    console.log(`User ${member.user.tag} has joined the server!`);
+    // look for the role "User" in the server
+    var role = member.guild.roles.find(role => role.name == "User");
+    member.addRole(role);
 });
 
 client.on('message', message => {
@@ -83,12 +91,11 @@ client.on('message', message => {
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
-        command.execute(message, args);
+        command.execute(message, args, client);
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');
     }
 });
-
 
 client.login(process.env.BOT_TOKEN)

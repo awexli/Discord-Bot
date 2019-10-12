@@ -36,8 +36,9 @@ client.once('ready', () => {
 
 client.on('guildMemberAdd', member => {
     console.log(`User ${member.user.tag} has joined the server!`);
-    // look for the role "User" in the server
+
     var role = member.guild.roles.find(role => role.name == "User");
+    
     member.addRole(role);
 });
 

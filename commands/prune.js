@@ -2,6 +2,11 @@ module.exports = {
 	name: 'prune',
 	description: 'Prune up to 99 messages.',
 	execute(message, args) {
+
+		if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+            return message.reply("You don't have the permission to do that.");
+        }
+
 		// includes the message just sent
 		const amount = parseInt(args[0]) + 1;
 

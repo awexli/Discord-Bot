@@ -4,6 +4,11 @@ module.exports = {
     name: 'role',
     description: 'Displays info on how to use role commands',
     execute(message) {
+        
+        if (!message.member.hasPermission("MANAGE_ROLES")) {
+            return message.reply("You don't have the permission to do that.");
+        }
+
         const embed = new Discord.RichEmbed()
             .setTitle('Role Commands')
             .setColor(0xFF0000)

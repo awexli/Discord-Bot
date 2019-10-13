@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'role+',
-    description: "Assigns a guild member to role",
+    name: 'role-',
+    description: "Removes a role from a guild memeber",
     execute(message, args) {
 
         if (!message.member.hasPermission("MANAGE_ROLES")) {
@@ -22,8 +22,8 @@ module.exports = {
             return message.reply("Couldnt find that role.");
         }
 
-        gMember.addRole(memberRole.id);
-        message.reply(`\`${gMember.displayName}\` has been added to the role, \`${roleName}\``);
+        gMember.removeRole(memberRole.id);
+        message.reply(`\`${gMember.displayName}\` has been REMOVED from the role, \`${roleName}\``);
         
     },
 };

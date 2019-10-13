@@ -22,8 +22,6 @@ module.exports = {
         const type = args[0];
 
         if (type == 'haiku') {
-            // splits each line in the text file
-            // stores each line in textByLine string array
             var textByLine = haikuText.split("\n");
         } else if (type == 'song') {
             console.log("Songs:");

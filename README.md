@@ -5,18 +5,20 @@ A discord bot that can take in various commands. Used for my personal server to 
 - p-server   
 - p-prune  
 - p-avatar  
-- p-ping 
-- p-role  
->>p-role+  
->>p-role-  
->>p-role?   
+- p-ping   
 - p-vid  
 >>p-vid haiku  
 >>p-vid song  
-- p-doggo
+- p-doggo  
+
+- **Role management**
+- [x] Role info (p-role)  
+- [x] Role assign (p-role+)  
+- [x] Role remove (p-role-)  
+- [x] Roles display (p-role?)  
+- [x] Need to check if role has already been removed or added
+
 ## Planning to add  
 - Osu profile / stats  
-- Role management:  
->> Need checks if role has already been removed or added
-- Memes  
-- Polling
+- [ ] Memes  
+- [ ] Polling

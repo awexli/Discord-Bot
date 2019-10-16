@@ -17,6 +17,7 @@ A discord bot that can take in various commands. Used for my personal server to 
 - [x] Role remove (p-role-)
 - [x] Roles display (p-role?)
 - [x] Need to check if role has already been removed or added
+- [ ] Create and delete roles on the server
 
 ## Planning to add  
 - Osu profile / stats  

@@ -66,6 +66,8 @@ client.on('message', message => {
         return message.channel.send(reply);
     }
 
+    // Cooldowns---------------------------------------------
+
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
     }
@@ -90,6 +92,8 @@ client.on('message', message => {
     timestamps.set(message.author.id, now);
     // user has not executed a command AGAIN during the cooldown period
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+    // End Cooldowns---------------------------------------------
 
     try {
         command.execute(message, args);

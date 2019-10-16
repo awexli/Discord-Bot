@@ -18,4 +18,5 @@ A discord bot that can take in various commands. Used for my personal server to 
 - Osu profile / stats  
 - Role management:  
 >> Need checks if role has already been removed or added
-- Memes
+- Memes  
+- Polling

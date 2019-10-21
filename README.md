@@ -1,10 +1,6 @@
 # Discord-Bot  
 A discord bot that can take in various commands. Used for my personal server to moderate, but mostly to entertain.  
 
-Create a discord app for server at [discord.app.com/developers/applications](https://discordapp.com/developers/applications)  
-npm install (update modules)  
-npm run dev
-
 ## Commands  
 - p-help  
 - p-server   

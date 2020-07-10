@@ -7,17 +7,9 @@ const songText = fs.readFileSync('./src/song.txt', 'utf-8');
 module.exports = {
   name: 'vid',
   description: 'Returns a random youtube video.',
+  args: true,
+  hasUsage: true,
   execute(message, args) {
-    const embed = new Discord.RichEmbed()
-      .setTitle('p-vid <command>')
-      .setColor(0xff0000)
-      .addField('p-vid haiku', 'Links to a random video I like')
-      .addField('p-vid song', 'Links to a random song I like');
-
-    if (!args.length || args.length > 1) {
-      return message.reply(embed);
-    }
-
     const type = args[0];
     const youtubeLinks = this.getVideoType(type);
 
@@ -42,6 +34,13 @@ module.exports = {
   getRandomIndexInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; 
-  }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  },
+  usage() {
+    return new Discord.RichEmbed()
+      .setTitle('p-vid <command>')
+      .setColor(0xff0000)
+      .addField('p-vid haiku', 'Links to a random video I like')
+      .addField('p-vid song', 'Links to a random song I like');
+  },
 };

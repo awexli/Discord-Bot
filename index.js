@@ -37,15 +37,13 @@ client.on('guildMemberAdd', (member) => {
 
 client.on('message', (message) => {
   if (!message.content.startsWith(PREFIX) || message.author.bot) return;
-
+  
   // p-vid haiku
   // args = ['haiku']
   const args = message.content.slice(PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
 
-  if (!client.commands.has(commandName)) {
-    return;
-  }
+  if (!client.commands.has(commandName)) return;
 
   // command officially stored
   const command = client.commands.get(commandName);

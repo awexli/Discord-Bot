@@ -14,7 +14,7 @@ module.exports = {
     const youtubeLinks = this.getVideoType(type);
 
     if (!youtubeLinks) {
-      return message.reply(embed);
+      return message.reply(this.usage());
     }
 
     const index = this.getRandomIndexInclusive(0, youtubeLinks.length - 1);
